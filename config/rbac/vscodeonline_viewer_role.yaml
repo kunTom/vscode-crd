@@ -1,0 +1,27 @@
+# permissions for end users to view vscodeonlines.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: vscodeonline-viewer-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: web-ide
+    app.kubernetes.io/part-of: web-ide
+    app.kubernetes.io/managed-by: kustomize
+  name: vscodeonline-viewer-role
+rules:
+- apiGroups:
+  - vscode.daocloud.io
+  resources:
+  - vscodeonlines
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - vscode.daocloud.io
+  resources:
+  - vscodeonlines/status
+  verbs:
+  - get

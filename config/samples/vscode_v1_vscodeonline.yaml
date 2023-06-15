@@ -1,0 +1,12 @@
+apiVersion: vscode.daocloud.io/v1
+kind: VscodeOnline
+metadata:
+  labels:
+    app.kubernetes.io/name: vscodeonline
+    app.kubernetes.io/instance: vscodeonline-sample
+    app.kubernetes.io/part-of: web-ide
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: web-ide
+  name: vscodeonline-sample
+spec:
+  # TODO(user): Add fields here
