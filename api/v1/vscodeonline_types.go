@@ -25,6 +25,8 @@ import (
 
 // VscodeOnlineSpec defines the desired state of VscodeOnline
 type VscodeOnlineSpec struct {
+	//project name for real git repository
+	ProjectName string `json:"projectName"`
 	//code-server (vscode) image
 	Image string `json:"image"`
 	//user define login code-server password
