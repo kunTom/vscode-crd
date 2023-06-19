@@ -30,7 +30,7 @@ import (
 	"github.com/go-logr/logr"
 	vscodev1 "github.com/kunTom/vscode-crd/api/v1"
 	"github.com/kunTom/vscode-crd/controllers/constants"
-	repo "github.com/kunTom/vscode-crd/repo"
+	repo "github.com/kunTom/vscode-crd/controllers/repo"
 )
 
 // VscodeOnlineReconciler reconciles a VscodeOnline object

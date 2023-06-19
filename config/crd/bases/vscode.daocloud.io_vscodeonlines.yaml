@@ -41,6 +41,9 @@ spec:
               loginPassword:
                 description: user define login code-server password
                 type: string
+              projectName:
+                description: project name for real git repository
+                type: string
               repo:
                 description: download repository address
                 type: string
@@ -50,6 +53,7 @@ spec:
             required:
             - image
             - loginPassword
+            - projectName
             - repo
             type: object
           status:
