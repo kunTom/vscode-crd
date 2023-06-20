@@ -20,6 +20,19 @@ func GetCommandInfo(vscode *vscodev1.VscodeOnline) []string {
 	}
 }
 
+func CheckPasswordChanged(vscodeDeploy *corev1.Pod, password string) ([]corev1.EnvVar, bool) {
+	envVars := vscodeDeploy.Spec.Containers[0].Env
+
+	for i, envVar := range envVars {
+		if envVar.Name == "PASSWORD" && envVar.Value != password {
+			envVar.Value = password
+			envVars[i] = envVar
+			return envVars, true
+		}
+	}
+	return nil, false
+}
+
 func PodForVscodeOnline(vscode *vscodev1.VscodeOnline) *corev1.Pod {
 	meta := getObjectMeta(vscode.Name, vscode.Namespace)
 	annotations := map[string]string{

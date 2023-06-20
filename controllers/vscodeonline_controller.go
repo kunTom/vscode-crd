@@ -133,6 +133,17 @@ func (r *VscodeOnlineReconciler) Reconcile(ctx context.Context, req ctrl.Request
 		return ctrl.Result{Requeue: true}, nil
 	}
 
+	pwdEnvVars, changed := repo.CheckPasswordChanged(vscodeDeploy, vscode.Spec.LoginPassword)
+	if changed {
+		vscodeDeploy.Spec.Containers[0].Env = pwdEnvVars
+		err = r.Update(ctx, vscodeDeploy)
+		if err != nil {
+			log.Error(err, "Failed to update Pod", "Pod.Namespace", vscodeDeploy.Namespace, "Pod.Name", vscodeDeploy.Name)
+			return ctrl.Result{}, err
+		}
+		return ctrl.Result{Requeue: true}, nil
+	}
+
 	svcPort := vscodeService.Spec.Ports[0].NodePort
 	vscode.Status.NodePort = strconv.Itoa(int(svcPort))
 	err = r.Status().Update(ctx, vscode)
@@ -156,7 +167,7 @@ func (r *VscodeOnlineReconciler) createOrGetPVC(ctx context.Context, vscode *vsc
 		}
 		return nil, nil
 	} else if err != nil {
-		log.Error(err, "Failed to get Deployment")
+		log.Error(err, "Failed to get PersistentVolumeClaim")
 		return nil, err
 	}
 	return pvc, nil
